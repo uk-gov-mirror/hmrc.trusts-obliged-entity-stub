@@ -20,7 +20,7 @@ import com.fasterxml.jackson.core.JsonParser
 import com.fasterxml.jackson.databind.{JsonNode, ObjectMapper}
 import com.networknt.schema.{Error, InputFormat, Schema, SchemaRegistry, SpecificationVersion}
 import play.api.Logging
-import models.{DesValidationError, FailedValidation, SuccessfulValidation, ValidationResult}
+import models.{FailedValidation, IfsValidationError, SuccessfulValidation, ValidationResult}
 
 import java.io.InputStream
 import scala.io.Source
@@ -73,12 +73,12 @@ class Validator(schema: Schema) extends Logging {
         FailedValidation("Not JSON", 0, Nil)
     }
 
-  private def getValidationErrors(validationOutput: List[Error]): Seq[DesValidationError] =
+  private def getValidationErrors(validationOutput: List[Error]): Seq[IfsValidationError] =
     validationOutput.map { error =>
       val message  = error.getMessage
       val location = error.getInstanceLocation.toString
       logger.error(s"[getValidationErrors] Failed at location : $location")
-      DesValidationError(message, if (location == "") "/" else location)
+      IfsValidationError(message, if (location == "") "/" else location)
     }
 
   private def toJsonNodeWithoutDuplicates(jsonNodeAsString: String): JsonNode = {

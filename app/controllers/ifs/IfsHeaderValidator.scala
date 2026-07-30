@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package controllers
+package controllers.ifs
 
 import play.api.mvc.*
 
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-trait HeaderValidator {
+trait IfsHeaderValidator {
 
   val CORRELATIONID_HEADER              = "CorrelationId"
   val ENVIRONMENT_HEADER                = "Environment"
@@ -47,8 +47,8 @@ trait HeaderValidator {
 
 }
 
-class HeaderValidatorAction @Inject() (parser: BodyParsers.Default)(using ec: ExecutionContext)
-    extends ActionBuilderImpl(parser) with HeaderValidator {
+class IfsHeaderValidatorAction @Inject()(parser: BodyParsers.Default)(using ec: ExecutionContext)
+    extends ActionBuilderImpl(parser) with IfsHeaderValidator {
 
   override def invokeBlock[A](request: Request[A], block: Request[A] => Future[Result]): Future[Result] = {
     lazy val (envValid, tokenValid, corrValid) =

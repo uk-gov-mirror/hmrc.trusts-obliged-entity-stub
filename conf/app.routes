@@ -1,3 +1,7 @@
 # microservice specific routes
 
-GET        /trusts/obliged-entities/:idType/:id            controllers.ObligedEntitiesController.getObligedEntity(id: String, idType: String)
+# IFS routes
+GET        /trusts/obliged-entities/:idType/:id                                              controllers.ifs.IfsObligedEntitiesController.getObligedEntity(id: String, idType: String)
+
+# HIP routes
+GET        /etmp/RESTAdapter/trustsandestates/obliged-entities/:idType/:id                   controllers.hip.HipObligedEntitiesController.getObligedEntity(id: String, idType: String)

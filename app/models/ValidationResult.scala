@@ -20,13 +20,13 @@ import play.api.libs.json.{Json, OFormat}
 
 sealed trait ValidationResult
 
-case class DesValidationError(message: String, location: String)
+case class IfsValidationError(message: String, location: String)
 
-object DesValidationError {
-  given OFormat[DesValidationError] = Json.format[DesValidationError]
+object IfsValidationError {
+  given OFormat[IfsValidationError] = Json.format[IfsValidationError]
 }
 
-case class FailedValidation(message: String, code: Int, validationErrors: Seq[DesValidationError])
+case class FailedValidation(message: String, code: Int, validationErrors: Seq[IfsValidationError])
     extends ValidationResult
 
 object FailedValidation {
