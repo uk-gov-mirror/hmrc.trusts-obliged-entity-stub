@@ -25,7 +25,7 @@ import utils.IfsResponse.*
 import scala.concurrent.Future
 
 @Singleton()
-class IfsObligedEntitiesController @Inject()(headerValidator: IfsHeaderValidatorAction)(cc: ControllerComponents)
+class IfsObligedEntitiesController @Inject() (headerValidator: IfsHeaderValidatorAction)(cc: ControllerComponents)
     extends BackendController(cc) with IfsHeaderValidator {
 
   def getObligedEntity(id: String, idType: String): Action[AnyContent] = headerValidator.async { request =>

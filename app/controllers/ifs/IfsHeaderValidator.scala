@@ -47,7 +47,7 @@ trait IfsHeaderValidator {
 
 }
 
-class IfsHeaderValidatorAction @Inject()(parser: BodyParsers.Default)(using ec: ExecutionContext)
+class IfsHeaderValidatorAction @Inject() (parser: BodyParsers.Default)(using ec: ExecutionContext)
     extends ActionBuilderImpl(parser) with IfsHeaderValidator {
 
   override def invokeBlock[A](request: Request[A], block: Request[A] => Future[Result]): Future[Result] = {

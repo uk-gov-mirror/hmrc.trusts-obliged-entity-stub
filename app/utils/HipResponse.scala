@@ -22,8 +22,7 @@ object HipResponse {
 
   def success(payload: JsValue): JsValue = Json.obj("success" -> payload)
 
-  val jsonResponse400: JsValue = Json.parse(
-    s"""
+  val jsonResponse400: JsValue = Json.parse(s"""
        |{
        |  "error": {
        |    "code": "400",
@@ -32,8 +31,7 @@ object HipResponse {
        |  }
        |}""".stripMargin)
 
-  val jsonResponseInvalidIdTypeOrIdValue: JsValue = Json.parse(
-    s"""
+  val jsonResponseInvalidIdTypeOrIdValue: JsValue = Json.parse(s"""
        |{
        |  "error": {
        |    "processingDate": "2001-12-17T09:30:47Z",
@@ -42,8 +40,7 @@ object HipResponse {
        |  }
        |}""".stripMargin)
 
-  val jsonResponseRequestNotProcessed: JsValue = Json.parse(
-    s"""
+  val jsonResponseRequestNotProcessed: JsValue = Json.parse(s"""
        |{
        |  "error": {
        |    "processingDate": "2001-12-17T09:30:47Z",
@@ -52,8 +49,7 @@ object HipResponse {
        |  }
        |}""".stripMargin)
 
-  val jsonResponseTechnicalError: JsValue = Json.parse(
-    s"""
+  val jsonResponseTechnicalError: JsValue = Json.parse(s"""
        |{
        |  "error": {
        |    "processingDate": "2001-12-17T09:30:47Z",
@@ -62,8 +58,7 @@ object HipResponse {
        |  }
        |}""".stripMargin)
 
-  val jsonResponse500: JsValue = Json.parse(
-    s"""
+  val jsonResponse500: JsValue = Json.parse(s"""
        |{
        |  "error": {
        |    "code": "500",

@@ -35,6 +35,7 @@ trait HipHeaderValidator {
 
   private val receiptDateFormatter: DateTimeFormatter =
     DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").withZone(ZoneOffset.UTC)
+
   private val VALID_TOKEN_REGEX =
     "^(Basic (.*))$".r
 

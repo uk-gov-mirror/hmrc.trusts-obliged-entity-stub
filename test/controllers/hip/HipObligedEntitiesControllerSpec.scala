@@ -102,7 +102,7 @@ class HipObligedEntitiesControllerSpec extends SpecBase with HipObligedEntitiesC
 
     "return 400 when headers are missing" in {
       val request = FakeRequest("GET", s"/etmp/RESTAdapter/trustsandestates/obliged-entities/$UTR_TYPE/0000000503")
-      val result = SUT.getObligedEntity("0000000503", UTR_TYPE).apply(request)
+      val result  = SUT.getObligedEntity("0000000503", UTR_TYPE).apply(request)
 
       status(result) must be(BAD_REQUEST)
     }
@@ -156,11 +156,10 @@ class HipObligedEntitiesControllerSpec extends SpecBase with HipObligedEntitiesC
     }
   }
 
-
   private def getObligedEntitiesAsJson(id: String, idType: String, expectedResult: Int): JsValue = {
     val request = createHipGetRequest(s"/etmp/RESTAdapter/trustsandestates/obliged-entities/$idType/$id")
-    val result = SUT.getObligedEntity(id, idType).apply(request)
-    status(result) must be(expectedResult)
+    val result  = SUT.getObligedEntity(id, idType).apply(request)
+    status(result)            must be(expectedResult)
     contentType(result).get mustBe "application/json"
     contentAsJson(result)
   }
@@ -179,7 +178,7 @@ class HipObligedEntitiesControllerSpec extends SpecBase with HipObligedEntitiesC
 
   private def getObligedEntitiesAsResponse(overrideHeader: (String, String)): Future[Result] = {
     val newHeaders = validHipHeaders + overrideHeader
-    val request = createHipGetRequestWithHeaders(
+    val request    = createHipGetRequestWithHeaders(
       s"/etmp/RESTAdapter/trustsandestates/obliged-entities/$UTR_TYPE/0000000503",
       newHeaders
     )
@@ -190,17 +189,16 @@ class HipObligedEntitiesControllerSpec extends SpecBase with HipObligedEntitiesC
     createHipGetRequestWithHeaders(url, validHipHeaders)
 
   private def createHipGetRequestWithHeaders(
-                                              url: String,
-                                              headers: Map[String, String]
-                                            ): FakeRequest[AnyContentAsEmpty.type] =
-    FakeRequest("GET", url).withHeaders(headers.toSeq *)
+    url: String,
+    headers: Map[String, String]
+  ): FakeRequest[AnyContentAsEmpty.type] =
+    FakeRequest("GET", url).withHeaders(headers.toSeq*)
 
 }
 
 trait HipObligedEntitiesControllerSpecTestData {
 
-  protected val jsonResponse400: JsValue = Json.parse(
-    """
+  protected val jsonResponse400: JsValue = Json.parse("""
       |{
       |  "error": {
       |    "code": "400",
@@ -209,8 +207,7 @@ trait HipObligedEntitiesControllerSpecTestData {
       |  }
       |}""".stripMargin)
 
-  protected val jsonResponse500: JsValue = Json.parse(
-    """
+  protected val jsonResponse500: JsValue = Json.parse("""
       |{
       |  "error": {
       |    "code": "500",
@@ -219,8 +216,7 @@ trait HipObligedEntitiesControllerSpecTestData {
       |  }
       |}""".stripMargin)
 
-  protected val jsonResponse422InvalidId: JsValue = Json.parse(
-    """
+  protected val jsonResponse422InvalidId: JsValue = Json.parse("""
       |{
       |  "error": {
       |    "processingDate": "2001-12-17T09:30:47Z",
@@ -229,8 +225,7 @@ trait HipObligedEntitiesControllerSpecTestData {
       |  }
       |}""".stripMargin)
 
-  protected val jsonResponse422RequestNotProcessed: JsValue = Json.parse(
-    """
+  protected val jsonResponse422RequestNotProcessed: JsValue = Json.parse("""
       |{
       |  "error": {
       |    "processingDate": "2001-12-17T09:30:47Z",
@@ -239,8 +234,7 @@ trait HipObligedEntitiesControllerSpecTestData {
       |  }
       |}""".stripMargin)
 
-  protected val jsonResponse422TechnicalError: JsValue = Json.parse(
-    """
+  protected val jsonResponse422TechnicalError: JsValue = Json.parse("""
       |{
       |  "error": {
       |    "processingDate": "2001-12-17T09:30:47Z",
@@ -248,4 +242,5 @@ trait HipObligedEntitiesControllerSpecTestData {
       |    "text": "Technical Error"
       |  }
       |}""".stripMargin)
+
 }
