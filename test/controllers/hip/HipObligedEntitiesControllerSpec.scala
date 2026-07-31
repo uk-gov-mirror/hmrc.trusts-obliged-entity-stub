@@ -46,6 +46,7 @@ class HipObligedEntitiesControllerSpec extends SpecBase with HipObligedEntitiesC
     "return OK with success-wrapped payload for 1000000011" in testObligedEntitiesUtr("1000000011")
     "return OK with success-wrapped payload for 1000000012" in testObligedEntitiesUtr("1000000012")
     "return OK with success-wrapped payload for 1000000013" in testObligedEntitiesUtr("1000000013")
+    "return OK with success-wrapped payload for 1000000017" in testObligedEntitiesUtr("1000000017")
     "return OK with success-wrapped payload for 1000000101" in testObligedEntitiesUtr("1000000101")
     "return OK with success-wrapped payload for 1000000102" in testObligedEntitiesUtr("1000000102")
     "return OK with success-wrapped payload for 1000000103" in testObligedEntitiesUtr("1000000103")
@@ -133,6 +134,12 @@ class HipObligedEntitiesControllerSpec extends SpecBase with HipObligedEntitiesC
 
     "return Bad Request for invalid id" in {
       val resultJson = getObligedEntitiesAsJson(id = "0000000400AAAAA", idType = UTR_TYPE, expectedResult = BAD_REQUEST)
+
+      resultJson mustBe jsonResponse400
+    }
+
+    "return Bad Request for id 0000000400" in {
+      val resultJson = getObligedEntitiesAsJson(id = "0000000400", idType = UTR_TYPE, expectedResult = BAD_REQUEST)
 
       resultJson mustBe jsonResponse400
     }
