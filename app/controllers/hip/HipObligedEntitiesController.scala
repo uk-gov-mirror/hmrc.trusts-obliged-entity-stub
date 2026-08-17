@@ -34,7 +34,6 @@ class HipObligedEntitiesController @Inject() (headerValidator: HipHeaderValidato
     idType match {
       case "UTR" if isUtrValid(id) => retrieveJson(id)
       case "URN" if isUrnValid(id) => retrieveJson(id)
-      case "URN" | "UTR"           => Future.successful(BadRequest(jsonResponse400))
       case _                       => Future.successful(BadRequest(jsonResponse400))
     }
   }
@@ -42,7 +41,7 @@ class HipObligedEntitiesController @Inject() (headerValidator: HipHeaderValidato
   private def retrieveJson(id: String)(using request: Request[AnyContent]): Future[Result] = {
 
     def jsonResult(filename: String) = {
-      val path = s"/resources/$filename.json"
+      val path = s"/resources/data/hip/$filename.json"
       Future.successful(
         Ok(success(jsonFromFile(path))).withHeaders(
           request.headers.get(CORRELATIONID).map((CORRELATIONID, _)).toSeq*
@@ -64,9 +63,6 @@ class HipObligedEntitiesController @Inject() (headerValidator: HipHeaderValidato
       // 4MLD taxable trust registered, first time played back under 5MLD. User needs to answer additional questions
       case "1000000010" =>
         jsonResult(id)
-      // 5mld taxable trust with no correspondence address
-      case "1000000017" =>
-        jsonResult(id)
       // 5mld non-taxable trusts with URN
       case "1234567890AAAAA" | "0000000001AAAAA" | "0000000002AAAAA" | "0000000003AAAAA" | "0000000004AAAAA" |
           "XATRUST80000001" | "NTTRUST00000001" =>
@@ -83,11 +79,11 @@ class HipObligedEntitiesController @Inject() (headerValidator: HipHeaderValidato
       case "0000000400" =>
         Future.successful(BadRequest(jsonResponse400))
       case "0000422000" =>
-        Future.successful(UnprocessableEntity(jsonResponseInvalidIdTypeOrIdValue))
+        Future.successful(UnprocessableEntity(json422ResponseInvalidIdTypeOrIdValue))
       case "0000422003" =>
-        Future.successful(UnprocessableEntity(jsonResponseRequestNotProcessed))
+        Future.successful(UnprocessableEntity(json422ResponseRequestNotProcessed))
       case "0000422999" =>
-        Future.successful(UnprocessableEntity(jsonResponseTechnicalError))
+        Future.successful(UnprocessableEntity(json422ResponseTechnicalError))
       case _            =>
         Future.successful(InternalServerError(jsonResponse500))
     }

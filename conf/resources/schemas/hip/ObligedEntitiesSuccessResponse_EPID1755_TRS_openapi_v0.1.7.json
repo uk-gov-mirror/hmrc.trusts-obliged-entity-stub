@@ -1,0 +1,406 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "ObligedEntitiesSuccessResponse",
+  "description": "Comment describing your JSON Schema",
+  "type": "object",
+  "properties": {
+    "success": {
+      "type": "object",
+      "properties": {
+        "submissionDate": {
+          "$ref": "#/definitions/dateStringObliged"
+        },
+        "trustName": {
+          "$ref": "#/definitions/orgName56String1"
+        },
+        "identifiers": {
+          "description": "Possible options - UTR to be returned for Taxable , URN for Non- Taxable , UTR and URN if Trust has converted from Non-taxable to Taxable",
+          "type": "object",
+          "properties": {
+            "utr": {
+              "$ref": "#/definitions/utrString1"
+            },
+            "urn": {
+              "$ref": "#/definitions/urnString1"
+            }
+          },
+          "additionalProperties": false
+        },
+        "trustStartDate": {
+          "$ref": "#/definitions/dateStringObliged"
+        },
+        "correspondence": {
+          "type": "object",
+          "properties": {
+            "address": {
+              "$ref": "#/definitions/addressType2"
+            },
+            "welsh": {
+              "description": "Welsh Language Preference",
+              "type": "boolean"
+            },
+            "braille": {
+              "description": "Braille Preference",
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "address"
+          ],
+          "additionalProperties": false
+        },
+        "entities": {
+          "type": "object",
+          "properties": {
+            "leadTrustee": {
+              "type": "object",
+              "properties": {
+                "leadTrusteeIndividual": {
+                  "type": "object",
+                  "properties": {
+                    "firstName": {
+                      "$ref": "#/definitions/nameString1"
+                    },
+                    "middleName": {
+                      "$ref": "#/definitions/nameString1"
+                    },
+                    "lastName": {
+                      "$ref": "#/definitions/nameString1"
+                    },
+                    "dateOfBirth": {
+                      "$ref": "#/definitions/monthYearString"
+                    },
+                    "nationality": {
+                      "$ref": "#/definitions/countryType2"
+                    },
+                    "countryOfResidence": {
+                      "$ref": "#/definitions/countryType2"
+                    }
+                  },
+                  "required": [
+                    "firstName",
+                    "lastName",
+                    "dateOfBirth"
+                  ]
+                },
+                "leadTrusteeCompany": {
+                  "type": "object",
+                  "properties": {
+                    "orgName": {
+                      "type": "string",
+                      "pattern": "^[A-Z0-9 ,.()/&'-]{1,105}$"
+                    },
+                    "countryOfResidence": {
+                      "$ref": "#/definitions/countryType2"
+                    }
+                  },
+                  "required": [
+                    "orgName"
+                  ]
+                }
+              },
+              "additionalProperties": false
+            },
+            "trustees": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 25,
+              "items": {
+                "type": "object",
+                "properties": {
+                  "trusteeIndividual": {
+                    "$ref": "#/definitions/individualType"
+                  },
+                  "trusteeCompany": {
+                    "$ref": "#/definitions/companyType2"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "naturalPerson": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 25,
+              "items": {
+                "$ref": "#/definitions/individualType"
+              }
+            },
+            "settlors": {
+              "description": "Atleast one Settlor will be present",
+              "type": "object",
+              "minProperties": 1,
+              "properties": {
+                "settlorIndividual": {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 25,
+                  "items": {
+                    "$ref": "#/definitions/individualType"
+                  }
+                },
+                "settlorCompany": {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 25,
+                  "items": {
+                    "$ref": "#/definitions/companyType2"
+                  }
+                },
+                "deceased": {
+                  "$ref": "#/definitions/individualType"
+                }
+              }
+            },
+            "protectors": {
+              "type": "object",
+              "properties": {
+                "protectorIndividual": {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 25,
+                  "items": {
+                    "$ref": "#/definitions/individualType"
+                  }
+                },
+                "protectorCompany": {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 25,
+                  "items": {
+                    "$ref": "#/definitions/companyType2"
+                  }
+                }
+              },
+              "additionalProperties": false
+            },
+            "beneficiary": {
+              "type": "object",
+              "minProperties": 1,
+              "properties": {
+                "individual": {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 25,
+                  "items": {
+                    "$ref": "#/definitions/individualType"
+                  }
+                },
+                "company": {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 25,
+                  "items": {
+                    "$ref": "#/definitions/companyType2"
+                  }
+                },
+                "trusts": {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 25,
+                  "items": {
+                    "$ref": "#/definitions/companyType2"
+                  }
+                },
+                "charity": {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 25,
+                  "items": {
+                    "$ref": "#/definitions/companyType2"
+                  }
+                },
+                "unidentified": {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 25,
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "beneficiaryDescription": {
+                        "$ref": "#/definitions/descriptionType"
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "large": {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 25,
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "beneficiaryDescription": {
+                        "$ref": "#/definitions/descriptionType"
+                      },
+                      "beneficiaryDescription1": {
+                        "$ref": "#/definitions/descriptionType"
+                      },
+                      "beneficiaryDescription2": {
+                        "$ref": "#/definitions/descriptionType"
+                      },
+                      "beneficiaryDescription3": {
+                        "$ref": "#/definitions/descriptionType"
+                      },
+                      "beneficiaryDescription4": {
+                        "$ref": "#/definitions/descriptionType"
+                      },
+                      "companyDetails": {
+                        "$ref": "#/definitions/companyType2"
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "other": {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 25,
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "otherBeneficiaryDescription": {
+                        "$ref": "#/definitions/descriptionType"
+                      },
+                      "countryOfResidence": {
+                        "$ref": "#/definitions/countryType2"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "required": [
+            "leadTrustee"
+          ]
+        }
+      },
+      "required": [
+        "trustName",
+        "identifiers",
+        "trustStartDate",
+        "correspondence",
+        "entities"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "success"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "addressLineType1": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9 ,.()/&'-]{1,35}$"
+    },
+    "addressType2": {
+      "type": "object",
+      "properties": {
+        "line1": {
+          "$ref": "#/definitions/addressLineType1"
+        },
+        "line2": {
+          "$ref": "#/definitions/addressLineType1"
+        },
+        "line3": {
+          "$ref": "#/definitions/addressLineType1"
+        },
+        "line4": {
+          "$ref": "#/definitions/addressLineType1"
+        },
+        "postCode": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9 ]{1,10}$"
+        },
+        "country": {
+          "$ref": "#/definitions/countryType2"
+        }
+      },
+      "required": [
+        "line1",
+        "line2",
+        "country"
+      ],
+      "additionalProperties": false
+    },
+    "companyType2": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[A-Z0-9 ,.()/&'-]{1,105}$"
+        },
+        "countryOfResidence": {
+          "$ref": "#/definitions/countryType2"
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "countryType2": {
+      "description": "Country name",
+      "type": "string",
+      "pattern": "^[A-Z ,-.Ç&'/]{1,44}$"
+    },
+    "dateStringObliged": {
+      "description": "DD-MM-YYYY",
+      "type": "string",
+      "pattern": "^(29[/]02[/]((15|16|17|18|19|20)([2468][048]|[13579][26]|0[48])|2000|1600)|((0[1-9]|1[0-9]|2[0-9]|30)[/](0[469]|11)[/](15|16|17|18|19|20)[0-9]{2}|(0[1-9]|[12][0-9]|3[01])[/](0[13578]|1[02])[/](15|16|17|18|19|20)[0-9]{2}|(0[1-9]|1[0-9]|2[0-8])[/]02[/](15|16|17|18|19|20)[0-9]{2}))$"
+    },
+    "descriptionType": {
+      "type": "string",
+      "pattern": "^[0-9A-Z{À-˿’}\\- \\&`'^]{1,70}$"
+    },
+    "individualType": {
+      "type": "object",
+      "properties": {
+        "firstName": {
+          "$ref": "#/definitions/nameString1"
+        },
+        "middleName": {
+          "$ref": "#/definitions/nameString1"
+        },
+        "lastName": {
+          "$ref": "#/definitions/nameString1"
+        },
+        "dateOfBirth": {
+          "$ref": "#/definitions/monthYearString"
+        },
+        "nationality": {
+          "$ref": "#/definitions/countryType2"
+        },
+        "countryOfResidence": {
+          "$ref": "#/definitions/countryType2"
+        }
+      },
+      "required": [
+        "firstName",
+        "lastName"
+      ]
+    },
+    "monthYearString": {
+      "type": "string",
+      "pattern": "^(0[1-9]|1[0-2])/(15|16|17|18|19|20)[0-9]{2}$"
+    },
+    "nameString1": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9 ,.()/&'-]{1,35}$"
+    },
+    "orgName56String1": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9 ,.()/&'-]{1,56}$"
+    },
+    "urnString1": {
+      "type": "string",
+      "pattern": "^[0-9A-Z]{15}$"
+    },
+    "utrString1": {
+      "type": "string",
+      "pattern": "^[0-9]{10}$"
+    }
+  }
+}

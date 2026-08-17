@@ -28,7 +28,7 @@ import scala.concurrent.Future
 
 class IfsObligedEntitiesControllerSpec extends SpecBase {
 
-  private val obligedEntitiesSchema    = "/resources/schemas/API1584_schema_1.2.0.json"
+  private val obligedEntitiesSchema    = "/resources/schemas/ifs/API1584_schema_1.2.0.json"
   private val obligedEntitiesValidator = new ValidationService().get(obligedEntitiesSchema)
 
   private val SUT = app.injector.instanceOf[IfsObligedEntitiesController]

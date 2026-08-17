@@ -17,15 +17,22 @@
 package controllers.hip
 
 import controllers.SpecBase
+import models.SuccessfulValidation
 import org.scalatest.matchers.must.Matchers.*
 import play.api.libs.json.{JsValue, Json}
 import play.api.mvc.{AnyContentAsEmpty, Result}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
+import service.ValidationService
+import utils.HipResponse.*
 
 import scala.concurrent.Future
 
-class HipObligedEntitiesControllerSpec extends SpecBase with HipObligedEntitiesControllerSpecTestData {
+class HipObligedEntitiesControllerSpec extends SpecBase {
+
+  private val obligedEntitiesSchema    =
+    "/resources/schemas/hip/ObligedEntitiesSuccessResponse_EPID1755_TRS_openapi_v0.1.7.json"
+  private val obligedEntitiesValidator = new ValidationService().get(obligedEntitiesSchema)
 
   private val SUT = app.injector.instanceOf[HipObligedEntitiesController]
 
@@ -46,7 +53,6 @@ class HipObligedEntitiesControllerSpec extends SpecBase with HipObligedEntitiesC
     "return OK with success-wrapped payload for 1000000011" in testObligedEntitiesUtr("1000000011")
     "return OK with success-wrapped payload for 1000000012" in testObligedEntitiesUtr("1000000012")
     "return OK with success-wrapped payload for 1000000013" in testObligedEntitiesUtr("1000000013")
-    "return OK with success-wrapped payload for 1000000017" in testObligedEntitiesUtr("1000000017")
     "return OK with success-wrapped payload for 1000000101" in testObligedEntitiesUtr("1000000101")
     "return OK with success-wrapped payload for 1000000102" in testObligedEntitiesUtr("1000000102")
     "return OK with success-wrapped payload for 1000000103" in testObligedEntitiesUtr("1000000103")
@@ -146,9 +152,9 @@ class HipObligedEntitiesControllerSpec extends SpecBase with HipObligedEntitiesC
 
     "return 422 with the expected payload for each business validation scenario" in {
       val scenarios = List(
-        ("0000422000", jsonResponse422InvalidId),
-        ("0000422003", jsonResponse422RequestNotProcessed),
-        ("0000422999", jsonResponse422TechnicalError)
+        ("0000422000", json422ResponseInvalidIdTypeOrIdValue),
+        ("0000422003", json422ResponseRequestNotProcessed),
+        ("0000422999", json422ResponseTechnicalError)
       )
 
       scenarios.foreach { case (id, expectedJson) =>
@@ -171,14 +177,23 @@ class HipObligedEntitiesControllerSpec extends SpecBase with HipObligedEntitiesC
     contentAsJson(result)
   }
 
+  private def getObligedEntitiesAsValidatedJson(id: String, idType: String): JsValue = {
+    val resultJson = getObligedEntitiesAsJson(id, idType, OK)
+
+    val validationResult = obligedEntitiesValidator.validateAgainstSchema(resultJson.toString)
+    validationResult mustBe SuccessfulValidation
+
+    resultJson
+  }
+
   private def testObligedEntitiesUtr(utr: String) = {
-    val resultJson = getObligedEntitiesAsJson(utr, UTR_TYPE, OK)
+    val resultJson = getObligedEntitiesAsValidatedJson(utr, UTR_TYPE)
 
     (resultJson \ "success" \ "identifiers" \ "utr").as[String] mustBe utr
   }
 
   private def testObligedEntitiesUrn(urn: String) = {
-    val resultJson = getObligedEntitiesAsJson(urn, URN_TYPE, OK)
+    val resultJson = getObligedEntitiesAsValidatedJson(urn, URN_TYPE)
 
     (resultJson \ "success" \ "identifiers" \ "urn").as[String] mustBe urn
   }
@@ -200,54 +215,5 @@ class HipObligedEntitiesControllerSpec extends SpecBase with HipObligedEntitiesC
     headers: Map[String, String]
   ): FakeRequest[AnyContentAsEmpty.type] =
     FakeRequest("GET", url).withHeaders(headers.toSeq*)
-
-}
-
-trait HipObligedEntitiesControllerSpecTestData {
-
-  protected val jsonResponse400: JsValue = Json.parse("""
-      |{
-      |  "error": {
-      |    "code": "400",
-      |    "message": "Bad Request",
-      |    "logID": "00000000000000000000000000000000"
-      |  }
-      |}""".stripMargin)
-
-  protected val jsonResponse500: JsValue = Json.parse("""
-      |{
-      |  "error": {
-      |    "code": "500",
-      |    "message": "Internal Server Error",
-      |    "logID": "00000000000000000000000000000000"
-      |  }
-      |}""".stripMargin)
-
-  protected val jsonResponse422InvalidId: JsValue = Json.parse("""
-      |{
-      |  "error": {
-      |    "processingDate": "2001-12-17T09:30:47Z",
-      |    "errorId": "000",
-      |    "text": "UTR or URN is invalid"
-      |  }
-      |}""".stripMargin)
-
-  protected val jsonResponse422RequestNotProcessed: JsValue = Json.parse("""
-      |{
-      |  "error": {
-      |    "processingDate": "2001-12-17T09:30:47Z",
-      |    "errorId": "003",
-      |    "text": "Request could not be processed"
-      |  }
-      |}""".stripMargin)
-
-  protected val jsonResponse422TechnicalError: JsValue = Json.parse("""
-      |{
-      |  "error": {
-      |    "processingDate": "2001-12-17T09:30:47Z",
-      |    "errorId": "999",
-      |    "text": "Technical Error"
-      |  }
-      |}""".stripMargin)
 
 }

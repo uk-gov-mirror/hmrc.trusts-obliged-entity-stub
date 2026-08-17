@@ -31,7 +31,7 @@ object HipResponse {
        |  }
        |}""".stripMargin)
 
-  val jsonResponseInvalidIdTypeOrIdValue: JsValue = Json.parse(s"""
+  val json422ResponseInvalidIdTypeOrIdValue: JsValue = Json.parse(s"""
        |{
        |  "error": {
        |    "processingDate": "2001-12-17T09:30:47Z",
@@ -40,7 +40,7 @@ object HipResponse {
        |  }
        |}""".stripMargin)
 
-  val jsonResponseRequestNotProcessed: JsValue = Json.parse(s"""
+  val json422ResponseRequestNotProcessed: JsValue = Json.parse(s"""
        |{
        |  "error": {
        |    "processingDate": "2001-12-17T09:30:47Z",
@@ -49,7 +49,7 @@ object HipResponse {
        |  }
        |}""".stripMargin)
 
-  val jsonResponseTechnicalError: JsValue = Json.parse(s"""
+  val json422ResponseTechnicalError: JsValue = Json.parse(s"""
        |{
        |  "error": {
        |    "processingDate": "2001-12-17T09:30:47Z",

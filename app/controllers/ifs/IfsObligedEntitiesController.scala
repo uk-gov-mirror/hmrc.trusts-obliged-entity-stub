@@ -41,7 +41,7 @@ class IfsObligedEntitiesController @Inject() (headerValidator: IfsHeaderValidato
 
   private def retrieveJson(id: String)(using request: Request[AnyContent]): Future[Result] = {
     def jsonResult(filename: String) = {
-      val path = s"/resources/$filename.json"
+      val path = s"/resources/data/ifs/$filename.json"
       Future.successful(
         Ok(jsonFromFile(path)).withHeaders(
           request.headers.get(CORRELATIONID_HEADER).map((CORRELATIONID_HEADER, _)).toSeq*
