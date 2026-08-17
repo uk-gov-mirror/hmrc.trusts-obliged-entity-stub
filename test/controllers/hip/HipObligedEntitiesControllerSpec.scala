@@ -30,7 +30,7 @@ import scala.concurrent.Future
 
 class HipObligedEntitiesControllerSpec extends SpecBase {
 
-  private val obligedEntitiesSchema    =
+  private val obligedEntitiesSchema =
     "/resources/schemas/hip/ObligedEntitiesSuccessResponse_EPID1755_TRS_openapi_v0.1.7.json"
 
   private val obligedEntitiesValidator = new ValidationService().get(obligedEntitiesSchema)
