@@ -81,6 +81,11 @@ class HipObligedEntitiesControllerSpec extends SpecBase {
     "return OK with success-wrapped payload for 3000000012" in testObligedEntitiesUtr("3000000012")
     "return OK with success-wrapped payload for 5174384721" in testObligedEntitiesUtr("5174384721")
     "return OK with success-wrapped payload for 5000000000" in testObligedEntitiesUtr("5000000000")
+    "return OK with success-wrapped payload for 1000000017 without schema validation" in {
+      val resultJson = getObligedEntitiesAsJson("1000000017", UTR_TYPE, OK)
+
+      (resultJson \ "success" \ "identifiers" \ "utr").as[String] mustBe "1000000017"
+    }
   }
 
   "getObligedEntity By Urn" should {
