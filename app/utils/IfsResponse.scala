@@ -18,7 +18,7 @@ package utils
 
 import play.api.libs.json.{JsValue, Json}
 
-object DesResponse {
+object IfsResponse {
 
   val jsonResponse400: JsValue = Json.parse(s"""
        |{

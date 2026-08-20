@@ -1,0 +1,154 @@
+{
+  "submissionDate": "29/02/1520",
+  "trustName": "Trust1234567890123456789012345678901234567890",
+  "identifiers": {
+    "utr": "2134514321",
+    "urn": "XATRUST80000001"
+  },
+  "trustStartDate": "13/08/1957",
+  "correspondence": {
+    "address": {
+      "line1": "AddressLine123456789011",
+      "line2": "AddressLine123456789012",
+      "line3": "AddressLine123456789013",
+      "line4": "AddressLine123456789014",
+      "country": "UNITED KINGDOM",
+      "postCode": "TF1 000"
+    },
+    "welsh": false,
+    "braille": false
+  },
+  "entities": {
+    "leadTrustee": {
+      "leadTrusteeCompany": {
+        "orgName": "A",
+        "countryOfResidence": "PAKISTAN"
+      }
+    },
+    "trustees": [
+      {
+        "trusteeIndividual": {
+          "firstName": "A",
+          "middleName": "A",
+          "lastName": "A",
+          "dateOfBirth": "08/1957",
+          "nationality": "NEW CALEDONIA",
+          "countryOfResidence": "SWITZERLAND"
+        }
+      },
+      {
+        "trusteeCompany": {
+          "name": "A",
+          "countryOfResidence": "WEST SAHARA"
+        }
+      }
+    ],
+    "naturalPerson": [
+      {
+        "firstName": "A",
+        "middleName": "A",
+        "lastName": "A",
+        "dateOfBirth": "08/1957",
+        "nationality": "TURKEY",
+        "countryOfResidence": "UTD.ARAB EMIR."
+      }
+    ],
+    "settlors": {
+      "settlorIndividual": [
+        {
+          "firstName": "A",
+          "middleName": "A",
+          "lastName": "A",
+          "dateOfBirth": "08/1957",
+          "nationality": "HEARD/MCDON.ISL",
+          "countryOfResidence": "UTD.ARAB EMIR."
+        }
+      ],
+      "settlorCompany": [
+        {
+          "name": "A",
+          "countryOfResidence": "CHINA"
+        }
+      ],
+      "deceased": {
+        "firstName": "A",
+        "middleName": "A",
+        "lastName": "A",
+        "dateOfBirth": "08/1957",
+        "nationality": "MALDIVES",
+        "countryOfResidence": "MAURETANIA"
+      }
+    },
+    "protectors": {
+      "protectorIndividual": [
+        {
+          "firstName": "A",
+          "middleName": "A",
+          "lastName": "A",
+          "dateOfBirth": "08/1957",
+          "nationality": "FINLAND",
+          "countryOfResidence": "LEBANON"
+        }
+      ],
+      "protectorCompany": [
+        {
+          "name": "A",
+          "countryOfResidence": "SINT MAARTEN"
+        }
+      ]
+    },
+    "beneficiary": {
+      "individual": [
+        {
+          "firstName": "A",
+          "middleName": "A",
+          "lastName": "A",
+          "dateOfBirth": "08/1957",
+          "nationality": "VIETNAM",
+          "countryOfResidence": "ST KITTS&NEVIS"
+        }
+      ],
+      "company": [
+        {
+          "name": "A",
+          "countryOfResidence": "PAP. NEW GUINEA"
+        }
+      ],
+      "trusts": [
+        {
+          "name": "A",
+          "countryOfResidence": "BOUVET ISLANDS"
+        }
+      ],
+      "charity": [
+        {
+          "name": "A",
+          "countryOfResidence": "GIBRALTAR"
+        }
+      ],
+      "unidentified": [
+        {
+          "beneficiaryDescription": "A"
+        }
+      ],
+      "large": [
+        {
+          "beneficiaryDescription": "A",
+          "beneficiaryDescription1": "A",
+          "beneficiaryDescription2": "A",
+          "beneficiaryDescription3": "A",
+          "beneficiaryDescription4": "A",
+          "companyDetails": {
+            "name": "A",
+            "countryOfResidence": "BELARUS"
+          }
+        }
+      ],
+      "other": [
+        {
+          "otherBeneficiaryDescription": "A"
+        }
+      ]
+    }
+  }
+}

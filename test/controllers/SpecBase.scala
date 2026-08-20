@@ -41,14 +41,28 @@ abstract class SpecBase extends AnyWordSpec with GuiceOneAppPerSuite {
   protected val TOKEN_HEADER         = "Authorization"
   protected val CORRELATIONID_HEADER = "CorrelationId"
 
-  protected val validHeaders: Map[String, String] = Map(
+  protected val validIfsHeaders: Map[String, String] = Map(
     (ENVIRONMENT_HEADER, "dev"),
     (TOKEN_HEADER, "Bearer 11"),
     (CORRELATIONID_HEADER, "cd7a4033-ae84-4e18-861d-9d62c6741e87")
   )
 
+  protected val HIP_CORRELATION_ID    = "correlationid"
+  protected val X_ORIGINATING_SYSTEM  = "X-Originating-System"
+  protected val X_TRANSMITTING_SYSTEM = "X-Transmitting-System"
+  protected val X_RECEIPT_DATE        = "X-Receipt-Date"
+  protected val AUTHORIZATION         = "Authorization"
+
+  protected val validHipHeaders: Map[String, String] = Map(
+    HIP_CORRELATION_ID    -> "cd7a4033-ae84-4e18-861d-9d62c6741e87",
+    X_ORIGINATING_SYSTEM  -> "TRS",
+    X_TRANSMITTING_SYSTEM -> "HIP",
+    X_RECEIPT_DATE        -> "2026-07-21T09:30:47Z",
+    AUTHORIZATION         -> "Basic dGVzdDp0ZXN0"
+  )
+
   def createGetRequestWithValidHeaders(url: String): FakeRequest[AnyContentAsEmpty.type] =
-    FakeRequest("GET", url).withHeaders(validHeaders.toSeq*)
+    FakeRequest("GET", url).withHeaders(validIfsHeaders.toSeq*)
 
   def createGetRequestWithHeaders(url: String, headers: Map[String, String]): FakeRequest[AnyContentAsEmpty.type] =
     FakeRequest("GET", url)

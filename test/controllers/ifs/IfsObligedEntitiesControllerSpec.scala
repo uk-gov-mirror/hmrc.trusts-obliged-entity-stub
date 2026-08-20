@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-package controllers
+package controllers.ifs
 
+import controllers.SpecBase
 import models.{FailedValidation, SuccessfulValidation}
 import org.scalatest.matchers.must.Matchers.*
 import play.api.libs.json.{JsValue, Json}
@@ -25,12 +26,12 @@ import service.ValidationService
 
 import scala.concurrent.Future
 
-class ObligedEntitiesControllerSpec extends SpecBase {
+class IfsObligedEntitiesControllerSpec extends SpecBase {
 
-  private val obligedEntitiesSchema    = "/resources/schemas/API1584_schema_1.2.0.json"
+  private val obligedEntitiesSchema    = "/resources/schemas/ifs/API1584_schema_1.2.0.json"
   private val obligedEntitiesValidator = new ValidationService().get(obligedEntitiesSchema)
 
-  private val SUT = app.injector.instanceOf[ObligedEntitiesController]
+  private val SUT = app.injector.instanceOf[IfsObligedEntitiesController]
 
   private val URN_TYPE = "URN"
   private val UTR_TYPE = "UTR"
@@ -210,14 +211,14 @@ class ObligedEntitiesControllerSpec extends SpecBase {
       (resultJson \ "reason").as[String] mustBe "Submission has not passed validation. Invalid parameter idType."
     }
 
-    "return Unprocessable Entity Error when des having internal errors" in {
+    "return Unprocessable Entity Error when ifs having internal errors" in {
       val resultJson = getObligedEntitiesAsJson("0000000422", UTR_TYPE, UNPROCESSABLE_ENTITY)
 
       (resultJson \ "code").as[String]   mustBe "BUSINESS_VALIDATION"
       (resultJson \ "reason").as[String] mustBe "The remote end point has indicated the request could not be processed."
     }
 
-    "return Internal Server Error when des having internal errors" in {
+    "return Internal Server Error when ifs having internal errors" in {
       val resultJson = getObligedEntitiesAsJson("0000000500", UTR_TYPE, INTERNAL_SERVER_ERROR)
 
       (resultJson \ "code").as[String] mustBe "SERVER_ERROR"
@@ -271,7 +272,7 @@ class ObligedEntitiesControllerSpec extends SpecBase {
   }
 
   private def getObligedEntitiesAsJson(id: String, idType: String, expectedResult: Int): JsValue = {
-    val request = createGetRequestWithHeaders(s"/trusts/obliged-entities/$idType/$id", validHeaders)
+    val request = createGetRequestWithHeaders(s"/trusts/obliged-entities/$idType/$id", validIfsHeaders)
     val result  = SUT.getObligedEntity(id, idType).apply(request)
     status(result)            must be(expectedResult)
     contentType(result).get mustBe "application/json"
@@ -304,7 +305,7 @@ class ObligedEntitiesControllerSpec extends SpecBase {
     idType: String,
     overrideHeader: (String, String)
   ): Future[Result] = {
-    val newHeaders = validHeaders + overrideHeader
+    val newHeaders = validIfsHeaders + overrideHeader
     val request    = createGetRequestWithHeaders(s"/trusts/obliged-entities/$idType/$id", newHeaders)
     val result     = SUT.getObligedEntity(id, idType).apply(request)
     result
@@ -315,7 +316,7 @@ class ObligedEntitiesControllerSpec extends SpecBase {
     idType: String,
     headerToDelete: String
   ): Future[Result] = {
-    val newHeaders = validHeaders - headerToDelete
+    val newHeaders = validIfsHeaders - headerToDelete
     val request    = createGetRequestWithHeaders(s"/trusts/obliged-entities/$idType/$id", newHeaders)
     val result     = SUT.getObligedEntity(id, idType).apply(request)
     result
